@@ -6,22 +6,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping(value = "api/user")
 public class UserController {
     @PostMapping("/login")
-    public ResponseEntity<String> logUser(@RequestBody Map<String,String> user ){
-        var username = user.get("username");
-        var password = user.get("password");
+    public ResponseEntity<Map<String, Boolean>> logUser(@RequestBody Map<String,String> user ){
+        String username = user.get("username");
+        String password = user.get("password");
 
+        Map<String, Boolean> response = new HashMap<>();
         if(username.equals("admin") && password.equals("admin")) {
-            return new ResponseEntity<>("OK", HttpStatus.OK);
+            response.put("success", true);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            response.put("success", false);
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
-
     }
 }
 
