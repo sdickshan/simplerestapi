@@ -13,8 +13,8 @@ import java.util.Map;
 public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> logUser(@RequestBody Map<String,String> user ){
-        var username = user.get("username");
-        var password = user.get("password");
+        String username = user.get("username");
+        String password = user.get("password");
 
         if(username.equals("admin") && password.equals("admin")) {
             return new ResponseEntity<>("OK", HttpStatus.OK);
